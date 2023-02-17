@@ -1,1 +1,1 @@
-# https://t0nn1x.github.io/discretemath_problem.github.io/
+# https://t0nn1x.github.io/discretemath_problem/
