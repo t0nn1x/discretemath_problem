@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Discrete Math Problem</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    label, select, input[type="submit"] {
+      display: block;
+      margin: 10px auto;
+      font-size: 18px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    #result {
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    #image {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 200px;
+    }
+  </style>
+  </head>
+  <body>
+    <h1>Discrete Math Problem</h1>
+    <p>Enter two sets separated by commas:</p>
+    <form>
+      Set A: <input type="text" name="setA"><br>
+      Set B: <input type="text" name="setB"><br>
+      Choose an action: 
+      <select name="action">
+        <option value="union">∪</option>
+        <option value="intersection">∩</option>
+        <option value="difference">\</option>
+        <option value="symmetric">∆</option>
+      </select><br>
+      <input type="submit" value="Submit">
+    </form>
+    <p>Resulting set C:</p>
+    <p id="result"></p>
+    <div id="image"></div>
+    <script>
+      const form = document.querySelector('form');
+      const result = document.querySelector('#result');
+      const image = document.querySelector('#image');
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const setA = document.querySelector('input[name="setA"]').value.split(',');
+        const setB = document.querySelector('input[name="setB"]').value.split(',');
+        const action = document.querySelector('select[name="action"]').value;
+        let setC = [];
+        switch (action) {
+          case 'union':
+            setC = [...new Set([...setA, ...setB])];
+            image.innerHTML = '<img src="union.png" alt="Union">';
+            break;
+          case 'intersection':
+            setC = setA.filter(x => setB.includes(x));
+            image.innerHTML = '<img src="intersection.png" alt="Intersection">';
+            break;
+          case 'difference':
+            setC = setA.filter(x => !setB.includes(x));
+            image.innerHTML = '<img src="difference.png" alt="Difference">';
+            break;
+          case 'symmetric':
+            setC = [...new Set([...setA.filter(x => !setB.includes(x)), ...setB.filter(x => !setA.includes(x))])];
+            image.innerHTML = '<img src="symmetric.png" alt="Symmetric Difference">';
+            break;
+          default:
+            setC = [];
+            image.innerHTML = '';
+        }
+        result.textContent = `{ ${setC.join(', ')} }`;
+      });
+    </script>
+  </body>
+</html>
