@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Матриця бінарного відношення</title>
+</head>
+<body>
+    <h1>Матриця бінарного відношення ρ</h1>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, p {
+            text-align: center;
+            color: #4a4a4a;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 5px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            max-width: 150px;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #0077ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0051c1;
+        }
+
+        #relationMatrix {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        #relationMatrix div {
+            margin-bottom: 5px;
+        }
+    </style>
+    <p>Введіть множину A (числа, розділені пробілами):</p>
+    <input type="text" id="setA" placeholder="1 2 3">
+    <p>Введіть множину B (числа, розділені пробілами):</p>
+    <input type="text" id="setB" placeholder="4 5 6">
+    <button onclick="computeRelationMatrix()">Обчислити матрицю відношення</button>
+    <h2>Матриця відношення:</h2>
+    <div id="relationMatrix"></div>
+
+    <script>
+        function computeRelationMatrix() {
+            const setA = document.getElementById("setA").value.split(" ").map(Number);
+            const setB = document.getElementById("setB").value.split(" ").map(Number);
+
+            let matrix = new Array(setA.length).fill(null).map(() => new Array(setB.length).fill(0));
+
+            for (let i = 0; i < setA.length; i++) {
+                for (let j = 0; j < setB.length; j++) {
+                    if (2 * (setA[i] - setB[j]) < 3) {
+                        matrix[i][j] = 1;
+                    }
+                }
+            }
+
+            displayRelationMatrix(matrix);
+        }
+
+        function displayRelationMatrix(matrix) {
+            const matrixContainer = document.getElementById("relationMatrix");
+            matrixContainer.innerHTML = "";
+
+            for (let row of matrix) {
+                const rowElement = document.createElement("div");
+                rowElement.innerText = row.join(" ");
+                matrixContainer.appendChild(rowElement);
+            }
+        }
+    </script>
+</body>
+</html>
